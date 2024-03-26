@@ -5,30 +5,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.minsafin.securityjwt.models.Role;
 import ru.minsafin.securityjwt.models.User;
 import ru.minsafin.securityjwt.repositories.UserRepository;
-import ru.minsafin.securityjwt.utils.UserNotCreatedException;
+import ru.minsafin.securityjwt.exceptions.UserNotCreatedException;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository repository;
-    /**
-     * Сохранение пользователя
-     *
-     * @return сохраненный пользователь
-     */
+
     public User save(User user) {
         return repository.save(user);
     }
 
-
-    /**
-     * Создание пользователя
-     *
-     * @return созданный пользователь
-     */
     public User create(User user) {
         if (repository.existsByUsername(user.getUsername())) {
             throw new UserNotCreatedException("Пользователь с таким именем уже существует");
@@ -41,46 +32,27 @@ public class UserService {
         return save(user);
     }
 
-    /**
-     * Получение пользователя по имени пользователя
-     *
-     * @return пользователь
-     */
     public User getByUsername(String username) {
         return repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
 
     }
 
-    /**
-     * Получение пользователя по имени пользователя
-     * <p>
-     * Нужен для Spring Security
-     *
-     * @return пользователь
-     */
+    public User getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
+
+    }
+
     public UserDetailsService userDetailsService() {
         return this::getByUsername;
     }
 
-    /**
-     * Получение текущего пользователя
-     *
-     * @return текущий пользователь
-     */
     public User getCurrentUser() {
-        // Получение имени пользователя из контекста Spring Security
         var username = SecurityContextHolder.getContext().getAuthentication().getName();
         return getByUsername(username);
     }
 
-
-    /**
-     * Выдача прав администратора текущему пользователю
-     * <p>
-     * Нужен для демонстрации
-     */
-    @Deprecated
     public void getAdmin() {
         var user = getCurrentUser();
         user.setRole(Role.ROLE_ADMIN);

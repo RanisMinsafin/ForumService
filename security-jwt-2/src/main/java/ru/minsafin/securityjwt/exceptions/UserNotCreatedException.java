@@ -1,4 +1,4 @@
-package ru.minsafin.securityjwt.utils;
+package ru.minsafin.securityjwt.exceptions;
 
 public class UserNotCreatedException extends RuntimeException{
     public UserNotCreatedException(String message) {

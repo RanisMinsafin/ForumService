@@ -12,7 +12,7 @@ import ru.minsafin.securityjwt.services.UserService;
 @RestController
 @RequestMapping("/example")
 @RequiredArgsConstructor
-@Tag(name = "Аутентификация")
+@Tag(name = "Пример")
 public class ExampleController {
     private final UserService service;
 
