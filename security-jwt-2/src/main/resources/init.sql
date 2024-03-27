@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE IF NOT EXISTS users
 (
     id       SERIAL PRIMARY KEY,
@@ -10,15 +12,15 @@ CREATE TABLE IF NOT EXISTS users
 
 CREATE TABLE IF NOT EXISTS topic
 (
-    id   SERIAL PRIMARY KEY,
+    id   UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(100) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS message
 (
-    id        SERIAL PRIMARY KEY,
+    id   UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id   int REFERENCES users (id),
     text      VARCHAR(255) NOT NULL,
     date_time TIMESTAMP    NOT NULL,
-    topic_id  int REFERENCES topic (id)
+    topic_id  UUID REFERENCES topic (id)
 );
