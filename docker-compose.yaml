@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    networks:
+      local_network:
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/forum-service?autoReconnect=true
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+    depends_on:
+      - postgres
+    restart: always
+
+  postgres:
+    image: postgres:latest
+    networks:
+      local_network:
+    environment:
+      POSTGRES_DB: "forum-service"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    ports:
+      - "5432:5432"
+
+networks:
+  local_network:

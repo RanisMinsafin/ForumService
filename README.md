@@ -30,7 +30,7 @@ Boot. Он обеспечивает хранение данных в PostgreSQL 
 * Swagger
 * Maven (для автоматизации сборки)
 * PostgreSQL
-
+* Docker
 Использование
 -------------
 
@@ -48,3 +48,17 @@ Boot. Он обеспечивает хранение данных в PostgreSQL 
 * Изменение сообщения: PUT /admin/messages/{id}
 * Удаление сообщения: DELETE /admin/messages/{id}
 
+Запуск
+---------
+
+1. Склонируйте репозиторий:
+
+       git clone <ссылка на репозиторий>
+
+2. Перейдите в директорию с backend частью приложения:
+
+       cd ForumService
+
+3. Запустите приложение с помощью Docker Compose:
+
+        docker compose up
