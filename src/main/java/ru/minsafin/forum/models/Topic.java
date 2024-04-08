@@ -14,7 +14,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "topic")
+@Table(name = "topics")
 public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

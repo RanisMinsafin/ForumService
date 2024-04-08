@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class MessageRequest {
     @NotNull
-    private Long userId;
+    private UUID userId;
     private UUID topicId;
     private String text;
 }

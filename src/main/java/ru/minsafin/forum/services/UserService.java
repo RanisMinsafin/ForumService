@@ -10,6 +10,8 @@ import ru.minsafin.forum.models.User;
 import ru.minsafin.forum.repositories.UserRepository;
 import ru.minsafin.forum.exceptions.UserNotCreatedException;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -37,7 +39,7 @@ public class UserService {
 
     }
 
-    public User getById(Long id) {
+    public User getById(UUID id) {
         return repository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
 

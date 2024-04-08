@@ -24,7 +24,7 @@ public class MessageService {
         repository.save(message);
     }
 
-    public void delete(UUID id, Long userId) {
+    public void delete(UUID id, UUID userId) {
         Optional<Message> messageOptional = getMessageById(id);
         Role role = userService.getById(userId).getRole();
         if (role != Role.ROLE_ADMIN) {
@@ -50,7 +50,7 @@ public class MessageService {
         return messageOptional;
     }
 
-    private void checkIfUserCanEditMessage(Message message, Long userId) {
+    private void checkIfUserCanEditMessage(Message message, UUID userId) {
         if (!message.getUser().getId().equals(userId)) {
             throw new MessageNotFoundException("Вы не можете изменить сообщение другого пользователя");
         }
